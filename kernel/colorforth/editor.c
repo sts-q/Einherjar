@@ -74,6 +74,8 @@ static void
 handle_input(uchar_t scancode)
 {
 	static bool_t escape = FALSE;
+        static bool_t shift  = FALSE;
+        static bool_t meta   = FALSE;
 	static uint8_t i = 0;
 	static char word[32];
 
@@ -98,6 +100,16 @@ handle_input(uchar_t scancode)
 		command_prompt();
 		return;
 	}
+        else if (scancode == KEY_LEFT_SHIFT  ||  scancode == KEY_RIGHT_SHIFT)
+        {
+                shift = TRUE;
+                return;
+        }
+        else if (scancode == KEY_LEFT_ALT)                      /* 0x38 Meta  */
+        {
+          if (meta)  {meta = FALSE; } else {meta = TRUE; };
+          return;
+        }
 
 	if (escape)
 	{
@@ -188,10 +200,22 @@ handle_input(uchar_t scancode)
 			break;
 
 		default:
+                  if (shift)
+                    {
+			vga_display_character(keyboard_get_keymap_shifted(scancode));
+                    }
+                  else if (meta)
+                    {
+			vga_display_character(keyboard_get_keymap_meta(scancode));
+                    }
+                  else
+                    {
 			vga_display_character(keyboard_get_keymap(scancode));
+                    }
 
 			// Make a word from characters (it won't be patented ;-)
 			word[i++] = keyboard_get_keymap(scancode);
+                        shift = FALSE;
 	}
 }
 

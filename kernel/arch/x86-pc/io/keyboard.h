@@ -62,5 +62,7 @@ void keyboard_interrupt_handler(int number);
 void keyboard_setup(struct console *term);
 
 char keyboard_get_keymap(uchar_t i);
+char keyboard_get_keymap_shifted(uchar_t i);
+char keyboard_get_keymap_meta(uchar_t i);
 
 #endif // _KEYBOARD_H_
