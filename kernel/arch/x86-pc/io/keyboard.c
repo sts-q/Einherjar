@@ -4,6 +4,34 @@
 
 #include "keyboard.h"
 
+/*
+==============================================================================
+sts-q
+my strange keyboard layout:
+
+normal
+      "  s  u  g  q  v  p  c  d  w
+       a  o  i  L  f  b  T  e  n  r  +
+         y  x  z  h  j  k  m  ,  .  -
+
+shift
+      '  ^  ~  @  o  o  {  [  ]  }
+       !  ?  &  $  %  o  (  )  <  >  *
+         \  |  /  o  o  #  =  ;  :  _
+
+meta
+                        7  8  9                ( is on    p  c  d        )
+                         4  5  6               ( is on     t  e  n       )
+                           1  2  3  0          ( is on       m  ,  .  -  )
+
+Shift needes to be pressed once before each shift-char.
+
+Meta is like traditional Caps-lock.
+
+
+==============================================================================
+*/
+
 char keymap[] = {
 /* 
 normal shift   ctrl    meta    
