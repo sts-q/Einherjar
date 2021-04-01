@@ -55,10 +55,23 @@ static void variable_word(const cell_t word);
 
 /* Word extensions (0), comments (9, 10, 11, 15), compiler feedback (13)
  * and display macro (14) are ignored. */
-void (*color_word_action[16])() = {ignore, interpret_forth_word,
-	interpret_big_number, create_word, compile_word, compile_big_number,
-	compile_number, compile_macro, interpret_number,
-	ignore, ignore, ignore, variable_word, ignore, ignore, ignore};
+void (*color_word_action[16])() =
+{                ignore,                            /*   0  */
+                 interpret_forth_word,              /*   1  INTERPRET_WORD_TAG    */
+	         interpret_big_number,              /*   2  */
+                 create_word,                       /*   3  */
+                 compile_word,                      /*   4  */
+                 compile_big_number,                /*   5  */
+	         compile_number,                    /*   6  */
+                 compile_macro,                     /*   7  */
+                 interpret_number,                  /*   8  INTERPRET_NUMBER_TAG  */
+	         ignore,                            /*   9  */
+                 ignore,                            /*  10  */
+                 ignore,                            /*  11  */
+                 variable_word,                     /*  12  */
+                 ignore,                            /*  13  */
+                 ignore,                            /*  14  */
+                 ignore};                           /*  15  */
 
 /*
  * Built-in words
@@ -98,11 +111,75 @@ void macro(void)
 	selected_dictionary = MACRO_DICTIONARY;
 }
 
+//----------------------------------------------------------------------------
+void dup(void)
+{
+	cell_t a = stack_pop();
+	stack_push( a );
+	stack_push( a );
+}
+
+void zap(void)
+{
+	cell_t a = stack_pop();
+}
+
+void nip(void)
+{
+	cell_t a = stack_pop();
+	           stack_pop();
+	stack_push( a );
+}
+
+void swap(void)
+{
+	cell_t a = stack_pop();
+	cell_t b = stack_pop();
+	stack_push( a );
+	stack_push( b );
+}
+
+void over(void)
+{
+	cell_t a = stack_pop();
+	cell_t b = stack_pop();
+	stack_push( b );
+	stack_push( a );
+	stack_push( b );
+}
+
+void leap(void)
+{
+	cell_t a = stack_pop();
+	cell_t b = stack_pop();
+	cell_t c = stack_pop();
+	stack_push( c );
+	stack_push( b );
+	stack_push( a );
+	stack_push( c );
+}
+
+
+//----------------------------------------------------------------------------
 void add(void)
 {
 	cell_t a = stack_pop();
 	cell_t b = stack_pop();
 	stack_push(a + b);
+}
+
+void sub(void)
+{
+	cell_t a = stack_pop();
+	cell_t b = stack_pop();
+	stack_push(b - a);
+}
+
+void mul(void)
+{
+	cell_t a = stack_pop();
+	cell_t b = stack_pop();
+	stack_push(a * b);
 }
 
 void divide(void)
@@ -111,6 +188,23 @@ void divide(void)
 	cell_t b = stack_pop();
 	stack_push(b / a);
 }
+
+//----------------------------------------------------------------------------
+void is_equal(void)
+{
+	cell_t a = stack_pop();
+	cell_t b = stack_pop();
+	stack_push( a == b );
+}
+
+void is_zero(void)
+{
+	cell_t a = stack_pop();
+	stack_push( a == 0 );
+}
+
+
+//----------------------------------------------------------------------------
 
 void dot_s(void)
 {
@@ -136,6 +230,9 @@ void dot_s(void)
 void dot(void)
 {
 	printf("%d ", (int)stack_pop());
+	printf("a: %d ", see_a);
+	printf("b: %d ", see_b);
+	printf("c. %d ", see_c);
 }
 
 /*
@@ -170,6 +267,19 @@ word_t forth_dictionary[128] =
 	{.name = 0xea000000, .code_address = dot},
 	{.name = 0xf6000000, .code_address = add},
 	{.name = 0xee000000, .code_address = divide},
+        
+        {.name = 0xe6000000, .code_address = sub},      // tools/pack.py "-"  
+        {.name = 0xfa000000, .code_address = mul},
+        
+        {.name = 0xc19b1000, .code_address = dup},
+        {.name = 0xecb88000, .code_address = zap},
+        {.name = 0x67c40000, .code_address = nip},
+        {.name = 0x85d71000, .code_address = swap},
+        {.name = 0x3c282000, .code_address = over},
+        {.name = 0xa22e2000, .code_address = leap},
+        
+        {.name = 0x4cf4fe00, .code_address = is_equal},         // a b eql?
+        {.name = 0xec827fc0, .code_address = is_zero},          // a   zero?
 	{0, 0},
 };
 
