@@ -2,3 +2,10 @@
 execute(macro) display_macro(cr)
 define(;) hex_compileshort(c3) compileword(,) hex_executeshort(c3) execute(,)
 {block 1}
+{block 2}
+{block 3}
+{block 4}
+{block 5}
+{block 6}
+{block 7}
+
