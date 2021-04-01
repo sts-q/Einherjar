@@ -25,9 +25,29 @@ meta
                            1  2  3  0          ( is on       m  ,  .  -  )
 
 Shift needes to be pressed once before each shift-char.
-
 Meta is like traditional Caps-lock.
 
+
+Invented on Mezzano OS.
+With the Very Best Regards to froggey.
+The only true Einherjar i ever chatted with ?
+
+
+==============================================================================
+code  = ' rtoeani' + 'smcylgfw' + 'dvpbhxuq' + '01234567' + \
+        '89j-k.z/' + ';:!+@*,?'
+
+        that is:     all letters       26
+                     no upper case
+                     all digits        10
+                     spc                1
+                     -./; :!+@ *,?     11            11  are encoded
+                   ----------------------
+                   chars found so far  48
+
+                     "'#$%&(){}[]<>~_|\^=`           21  not encoded ?
+                                                 ------
+                                                     32  special chars
 
 ==============================================================================
 */

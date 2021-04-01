@@ -64,7 +64,9 @@ do_cmd(char *word)
 			return;
 		}
 	}
-
+        // see_a = see_b;
+        // see_b = see_c;
+        // see_c = packed;
 	dispatch_word(packed);
 	dot_s();
 	command_prompt();
@@ -203,18 +205,20 @@ handle_input(uchar_t scancode)
                   if (shift)
                     {
 			vga_display_character(keyboard_get_keymap_shifted(scancode));
+			word[i++] = keyboard_get_keymap_shifted(scancode);
                     }
                   else if (meta)
                     {
 			vga_display_character(keyboard_get_keymap_meta(scancode));
+			word[i++] = keyboard_get_keymap_meta(scancode);
                     }
                   else
                     {
 			vga_display_character(keyboard_get_keymap(scancode));
+			word[i++] = keyboard_get_keymap(scancode);
                     }
 
 			// Make a word from characters (it won't be patented ;-)
-			word[i++] = keyboard_get_keymap(scancode);
                         shift = FALSE;
 	}
 }
@@ -589,6 +593,9 @@ editor(void *args)
 
 	blocks = (cell_t *)params->initrd_start;
 	total_blocks = (params->initrd_end - params->initrd_start) / BLOCK_SIZE;
+  see_a = total_blocks;
+  see_b = params->initrd_start;
+  see_c = params->initrd_end;
 
 	vga_clear();
 

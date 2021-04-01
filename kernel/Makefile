@@ -67,7 +67,7 @@ initrd:
 	../tools/blocks_converter.py tocf ../initrd/blocks.cfs $(INITRD_PATH)/initrd.img
 
 run:
-	qemu-system-i386 -m 16 -cdrom $(MULTIBOOT_IMAGE)
+	qemu-system-i386  -m 16 -cdrom $(MULTIBOOT_IMAGE)
 
 clean:
 	$(cleaning)

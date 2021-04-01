@@ -12,6 +12,10 @@
 
 #include "types.h"
 
+int32_t see_a;
+int32_t see_b;
+int32_t see_c;
+
 /**
  * Assert an expression
  *

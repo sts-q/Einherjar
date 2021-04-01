@@ -33,7 +33,7 @@ void roentgenium_main(uint32_t magic, uint32_t address)
 
     (void)magic; // Avoid a useless warning ;-)
 
-    // Initrd
+    // Initrd                                           initial RAM disk
     uint32_t initrd_start;
     uint32_t initrd_end;
 
@@ -62,10 +62,10 @@ void roentgenium_main(uint32_t magic, uint32_t address)
 
     // Initrd: Initial Ram Disk
     initrd_start = *((uint32_t *)mbi->mods_addr);
-    initrd_end   = *(uint32_t *)(mbi->mods_addr + 4);
+    initrd_end   = *(uint32_t *)(mbi->mods_addr + 4);        /* sts-q  was: 4   */
 
     // Physical memory management
-    physical_memory_setup((mbi->mem_upper<<10) + (1<<20),
+    physical_memory_setup((mbi->mem_upper<<10) + (1<<20),    /* ram_size   ( <<10) == * 1024   (1<<20) == 1MB */
 		    initrd_start,
 		    initrd_end);
 
@@ -81,7 +81,7 @@ void roentgenium_main(uint32_t magic, uint32_t address)
     // Console
     console_setup(&cons, vga_display_character);
 
-    // colorForth
+    // colorForth                                       
     colorforth_initialize();
 
     struct editor_args *args = malloc(sizeof(struct editor_args));
