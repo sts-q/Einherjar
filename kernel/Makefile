@@ -69,8 +69,13 @@ initrd:
 run:
 	qemu-system-i386  -m 16 -cdrom $(MULTIBOOT_IMAGE)
 
-vrun:	# start VM im VirtualBox
-	VBoxManage startvm einherjar
+vrun0:	# start VM im VirtualBox
+	VBoxManage startvm   einherjar
+
+vrun:	# stop old, start new VM im VirtualBox
+	VBoxManage controlvm einherjar poweroff
+	sleep 1
+	VBoxManage startvm   einherjar
 
 clean:
 	$(cleaning)
