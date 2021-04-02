@@ -24,8 +24,6 @@ meta
                          4  5  6               ( is on     t  e  n       )
                            1  2  3  0          ( is on       m  ,  .  -  )
 
-Shift needes to be pressed once before each shift-char.
-Meta is like traditional Caps-lock.
 
 
 Invented on Mezzano OS.
@@ -60,7 +58,7 @@ normal shift   ctrl    meta
 0x1B,  0x1B,   0x1B,   0x1B,    /*  esc (0x01)  */
 '1',    'o',    '1',    'o',
 '2',    'o',    '2',    'o',
-'3',    'o',    '3',    'o',
+0xFF,  0xFF,  0xFF,    0xFF,    //'3',    'o',    '3',    'o',   our new Escape-key
 '4',    'o',    '4',    'o',
 '5',    'o',    '5',    'o',
 '6',    'o',    '6',    'o',
@@ -112,7 +110,7 @@ normal shift   ctrl    meta
 '-',    '_',   0x2F,    '0', 
 0x10,   0x10,   66,   66,       /*  Rshift  (0x36)  */
 0xFF,   0xFF,   0xFF,   0xFF,   /*  (0x37)  */
-0xFF,   0xFF,   0xFF,   0xFF,   /*  (0x38)  Meta  */        
+0xFF,   0xFF,   0xFF,   0xFF,   /*  (0x38)         Meta  */        
 0xFF,   0xFF,   0xFF,   0xFF,   /*  (0x39)  */
 0xFF,   0xFF,   0xFF,   0xFF,   /*  (0x3a)  */
 0xFF,   0xFF,   0xFF,   0xFF,   /*  (0x3b)  */
@@ -171,7 +169,10 @@ void keyboard_interrupt_handler(int number)
 
 	scancode = inb(KEYBOARD_DATA_PORT);
 
-	if (scancode < 0x80)
+	if    ((scancode < 0x80)                                // key pressdown event for all keys
+            || (scancode == KEY_LEFT_SHIFT_RELEASE)             // key release event for shift and meta/alt
+            || (scancode == KEY_RIGHT_SHIFT_RELEASE)
+            || (scancode == KEY_LEFT_ALT_RELEASE))
 	{
 		console_add_character(terminal, scancode);
 	}

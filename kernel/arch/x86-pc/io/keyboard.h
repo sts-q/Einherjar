@@ -22,7 +22,7 @@
 #define KBD_TABULATION  0x09
 
 // See scancodes at wiki.osdev.org/PS2/2_Keyboard
-#define KEY_ESCAPE      0x01
+#define KEY_ESCAPE      0x04       // was: 0x01 escape   now: 0x04 key-3      Key-3 is our new escape-key.
 #define KEY_BACKSPACE   0x0e
 #define KEY_TAB         0x0f
 #define KEY_ENTER       0x1c
@@ -52,6 +52,9 @@
 #define KEY_RIGHT       0x4d
 #define KEY_PAGE_UP	0x49
 #define KEY_PAGE_DOWN	0x51
+#define KEY_LEFT_SHIFT_RELEASE    0xaa
+#define KEY_RIGHT_SHIFT_RELEASE   0xb6
+#define KEY_LEFT_ALT_RELEASE      0xb8
 
 /** Handles keyboard
  *

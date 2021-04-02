@@ -81,6 +81,7 @@ handle_input(uchar_t scancode)
 	static uint8_t i = 0;
 	static char word[32];
 
+
 	if (scancode == KEY_ESCAPE)
 	{
 		escape = TRUE;
@@ -107,9 +108,19 @@ handle_input(uchar_t scancode)
                 shift = TRUE;
                 return;
         }
-        else if (scancode == KEY_LEFT_ALT)                      /* 0x38 Meta  */
+        else if (scancode == KEY_LEFT_SHIFT_RELEASE  ||  scancode == KEY_RIGHT_SHIFT_RELEASE)
         {
-          if (meta)  {meta = FALSE; } else {meta = TRUE; };
+                shift = FALSE;
+                return;
+        }
+        else if (scancode == KEY_LEFT_ALT)         
+        {
+          {meta = TRUE; };
+          return;
+        }
+        else if (scancode == KEY_LEFT_ALT_RELEASE) 
+        {
+          {meta = FALSE; };
           return;
         }
 
@@ -202,6 +213,7 @@ handle_input(uchar_t scancode)
 			break;
 
 		default:
+                  // Make a word from characters (it won't be patented ;-)
                   if (shift)
                     {
 			vga_display_character(keyboard_get_keymap_shifted(scancode));
@@ -218,8 +230,6 @@ handle_input(uchar_t scancode)
 			word[i++] = keyboard_get_keymap(scancode);
                     }
 
-			// Make a word from characters (it won't be patented ;-)
-                        shift = FALSE;
 	}
 }
 
