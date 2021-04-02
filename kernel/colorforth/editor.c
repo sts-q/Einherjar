@@ -199,19 +199,31 @@ handle_input(uchar_t scancode)
 			break;
 
 		case KEY_PAGE_UP:
-			if (nb_block-1 == -1)
-				break;
-
-			display_block(--nb_block);
+			if (nb_block == 0)
+                                nb_block = total_blocks - 1;
+                        else
+                                --nb_block;
+			display_block( nb_block );
 			break;
 
 		case KEY_PAGE_DOWN:
 			if (nb_block+1 > (cell_t)total_blocks-1)
-				break;
-
-			display_block(++nb_block);
+                                nb_block = 0;
+                        else 
+                                ++nb_block;  
+			display_block( nb_block );
 			break;
+                        
+                case KEY_HOME:
+                        nb_block = 0;
+                        display_block( nb_block );
+                        break;
 
+                case KEY_END:
+                        nb_block = total_blocks - 1;
+                        display_block( nb_block );
+                        break;
+                        
                 case KEY_BACKSPACE:
 			vga_update_position(-1, 0);
 			vga_display_character( ' ' );
