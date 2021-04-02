@@ -68,7 +68,7 @@ normal shift   ctrl    meta
 '0',    'o',    '0',    'o',
 'o',    'o',    '-',    'o',
 'o',    'o',    '=',    'o',  
-0x08,  0x08,   0x7F,   0x08,    /*  backspace   */
+0x08,  0x08,   0x7F,   0x08,    /*  (0x0E)   backspace   */
 0x09,  0x09,   0x09,   0x09,    /*  tab */
 '"',   0x27,    'q',    'o',    /*  (0x10) */
 's',    '^',    'w',    'o',

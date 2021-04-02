@@ -212,6 +212,14 @@ handle_input(uchar_t scancode)
 			display_block(++nb_block);
 			break;
 
+                case KEY_BACKSPACE:
+			vga_update_position(-1, 0);
+			vga_display_character( ' ' );
+			vga_update_position(-1, 0);
+			vga_update_cursor();
+                        i--;
+                        break;
+
 		default:
                   // Make a word from characters (it won't be patented ;-)
                   if (shift)
